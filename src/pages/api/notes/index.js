@@ -1,4 +1,4 @@
-import Note from "../../../components/Note";
+import Note from './../../../models/Note'
 import dbConnect from "../../../utils/dbConnect";
 
 

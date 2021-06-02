@@ -7,7 +7,7 @@ import Link from 'next/link'
          <a className='navbar-brand'>Note App</a>
        </Link>
        <Link href='/new'>
-         <a className='navbar-create'>Create note</a>
+         <a className='create'>Create note</a>
        </Link>  
      </nav>
   )
