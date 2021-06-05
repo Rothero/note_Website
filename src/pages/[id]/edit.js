@@ -5,8 +5,8 @@ import fetch from 'isomorphic-unfetch';
 import {Button, Form, Loader} from 'semantic-ui-react';
 import {useRouter} from 'next/router'
 
-const NewNote = () => {
-  const[form, setForm]= useState({title:'',description:''});
+const EditNote = ({note}) => {
+  const[form, setForm]= useState({title:note.title, description:note.description});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors,setErrors]= useState({});
   const router = useRouter();
@@ -14,17 +14,17 @@ const NewNote = () => {
   useEffect(() => {
     if(isSubmitting) {
       if(Object.keys(errors).length == 0){
-        createNote();
+        UpdateNote();
       }
       else{
         setIsSubmitting(false);
       }
     }
   }, [errors])
-  const createNote = async () => {
+  const UpdateNote = async () => {
     try {
-      const res=await fetch('http://localhost:3000/api/notes',{
-        method: 'POST',
+      const res=await fetch(`http://localhost:3000/api/notes/${router.query.id}`,{
+        method: 'PUT',
         headers:{
           "Accept": "application/json",
           "Content-Type":"application/json"
@@ -63,7 +63,7 @@ const NewNote = () => {
 
   return (
     <div className="form-container">
-      <h1>Create Note</h1>
+      <h1>Update Note</h1>
       <div>
         {
          isSubmitting?<Loader active inLine='centered'/>
@@ -73,7 +73,8 @@ const NewNote = () => {
            error={errors.title ? {content:'Please enter a title',pointing:'below'}:null} 
            label ='Title' 
            placeholder='Title' 
-           name='title' 
+           name='title'
+           value={form.title} 
            onChange={handleChange}
            />
            <Form.TextArea 
@@ -82,8 +83,9 @@ const NewNote = () => {
            label ='Description'  
            placeholder='Description' 
            name='description' 
+           value={form.description} 
            onChange={handleChange}/>
-           <Button type='submit'>Create</Button>
+           <Button type='submit'>Update</Button>
          </Form>
         }
       </div>
@@ -92,4 +94,10 @@ const NewNote = () => {
   )
 }
 
-export default NewNote
+EditNote.getInitialProps = async ({ query: { id } }) => {
+    const res = await fetch(`http://localhost:3000/api/notes/${id}`);
+    const { data } = await res.json();
+
+    return { note: data }
+}
+export default EditNote

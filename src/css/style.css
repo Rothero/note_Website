@@ -29,3 +29,19 @@ h1 {
 .create:hover {
   color: #fff;
 }
+
+.form-container {
+  width: 400px;
+  margin: 20px auto;
+}
+
+.notes-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.grid-wrapper {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+}

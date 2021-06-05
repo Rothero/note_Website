@@ -2,6 +2,10 @@ import mongoose from 'mongoose';
 
 const connection ={}
 
+mongoose.set('useNewUrlParser', true);
+mongoose.set('useFindAndModify', false);
+mongoose.set('useCreateIndex', true);
+
 async function dbConnect(){
   if (connection.isConnected){
     return;  

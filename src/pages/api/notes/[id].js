@@ -1,4 +1,4 @@
-import Note from "../../../components/Note";
+import Note from './../../../models/Note';
 import dbConnect from "../../../utils/dbConnect";
 
 
@@ -40,7 +40,7 @@ export default async (req,res) =>{
 
     case 'DELETE':
       try {
-        const deletedNote=await Note.deleteOne({_id:id});
+        const deletedNote=await Note.deleteMany({_id:id});
         if(!deletedNote){
           return res.status(400).json({success:false})
         }
